@@ -1,0 +1,13 @@
+# Target labels
+ EspIdfBootloader
+# Source files and their labels
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/zephyr/soc/soc/xtensa/espressif_esp32/esp32/CMakeFiles/EspIdfBootloader
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/zephyr/soc/soc/xtensa/espressif_esp32/esp32/CMakeFiles/EspIdfBootloader.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/zephyr/soc/soc/xtensa/espressif_esp32/esp32/CMakeFiles/EspIdfBootloader-complete.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-build.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-configure.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-download.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-install.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-mkdir.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-patch.rule
+/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/src/EspIdfBootloader-stamp/EspIdfBootloader-update.rule

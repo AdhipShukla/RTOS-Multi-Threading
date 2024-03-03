@@ -1,0 +1,29 @@
+/{
+	pwmleds{
+		compatible = "pwm-leds";
+		fading_led: fading_led{
+				pwms = <&ledc0 0 10000 PWM_POLARITY_NORMAL>;
+		};
+	};
+};	
+
+&pinctrl{//New child node
+	ledc0_default: ledc0_default{ //Defining default state for ledc0 controller
+		group1 {//Pin configuration based on group
+			pinmux =<LEDC_CH0_GPIO25>;//Using pin GPIO 25
+			output-enable; //property configured for output enable
+		};
+	};
+};
+
+&ledc0{	
+	pinctrl-0=<&ledc0_default>; //binding default state to property pinctrl-0. More states can be bound to pinctrl-1,2 etc
+	pinctrl-names = "default"; //state name
+	status="okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	channel0@0{
+		reg = <0x0>;//Defines the ID of the channel. It must match channel used in pinmux
+		timer = <0>;//low or high speed timer used by PWM channel
+	};
+};

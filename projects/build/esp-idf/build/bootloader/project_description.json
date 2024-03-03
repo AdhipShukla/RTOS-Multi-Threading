@@ -1,0 +1,21 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader/subproject",
+    "build_dir":          "/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/build/bootloader",
+    "config_file":        "/home/adhipshukla/zephyrproject/zephyr_codes/projects/build/esp-idf/build/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "67fa60bdff",
+    "target":             "esp32",
+    "rev":                "0",
+    "phy_data_partition": "",
+    "monitor_baud" :      "115200",
+    "monitor_toolprefix": "xtensa-esp32-elf-",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/efuse/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp32/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_common/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_hw_support/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_system/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/freertos/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/hal/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/log/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/newlib/Kconfig;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader/Kconfig.projbuild;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_rom/Kconfig.projbuild;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esptool_py/Kconfig.projbuild;/home/adhipshukla/zephyrproject/modules/hal/espressif/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_hw_support", "esp_rom", "esp_system", "esptool_py", "freertos", "hal", "log", "main", "micro-ecc", "newlib", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader_support", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/efuse", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp32", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_common", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_hw_support", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_rom", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esp_system", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/esptool_py", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/freertos", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/hal", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/log", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader/subproject/main", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/bootloader/subproject/components/micro-ecc", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/newlib", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/partition_table", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/soc", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/spi_flash", "/home/adhipshukla/zephyrproject/modules/hal/espressif/components/xtensa", "" ]
+}

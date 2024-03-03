@@ -1,0 +1,32 @@
+/{
+  leds {
+       compatible = "gpio-leds";
+       blinking_led: blinking_led{
+        gpios=<&gpio0 5 GPIO_ACTIVE_HIGH>;
+       };
+    };
+};
+
+&uart1{
+	compatible="espressif,esp32-uart";
+	reg = <0x3ff50000 0x400>;
+	pinctrl-0 = <&uart1_default>;
+	pinctrl-names = "default";
+	status = "okay";
+	current-speed = <115200>;
+	parity = "none";
+	stop-bits = "1";
+	data-bits = <8>;
+};
+&pinctrl{
+        uart1_default: uart1_default{ //
+                group1 {//Pin configuration based on group
+                        pinmux =<UART1_TX_GPIO22>;//Using pin GPIO 22 for TX
+                        output-high;
+                };
+		group2{
+			pinmux = <UART1_RX_GPIO23>;//Using GPIO 23 for RX
+			bias-pull-up;
+		};
+        };
+};
