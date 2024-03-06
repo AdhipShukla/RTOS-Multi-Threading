@@ -60,7 +60,7 @@ void low_reader(void *p1, void *p2, void *p3){
     uint32_t myCurr, myPrev;
     uint32_t loReaderPoi;    //Pointers for lower priority readers 
     while(1){
-        printk("LoReader Started\n");
+        printk("\n");
         //Call interrupt at realse to read the previous pointer
         if(*(int*)p3){
             for(;;){
@@ -80,11 +80,13 @@ void low_reader(void *p1, void *p2, void *p3){
             loReaderPoi=myCurr;
         }
         temp=buffer[loReaderPoi].Val;
-        //printk("Value read by low reader%d %d\n",*(int*)p1,temp);
+        printk("Value read by low reader%d %d\n",*(int*)p1,temp);
         while(CAS(&buffer[loReaderPoi].InUseCnt,buffer[loReaderPoi].InUseCnt,buffer[loReaderPoi].InUseCnt++)!=buffer[loReaderPoi].InUseCnt); //Incresing the the use count atomically 
         k_msleep(*(int*)p2);
-        printk("Value read by low reader%d %d\n",*(int*)p1,temp);
+        //for( volatile int i=0; i<*(int*)p2; i++);
+        //printk("Value read by low reader%d %d\n",*(int*)p1,temp);
         while(CAS(&buffer[loReaderPoi].InUseCnt,buffer[loReaderPoi].InUseCnt,buffer[loReaderPoi].InUseCnt--)!=buffer[loReaderPoi].InUseCnt); //Value not in use by this thread anymore
+        
     }
 }
 
@@ -93,7 +95,7 @@ void high_reader(void *p1, void *p2, void *p3){
     uint8_t temp;
     uint32_t hiReaderPoi;      
     while(1){
-        printk("HiReader Started\n");
+        printk("\n");
         //Call interrupt at realse to read the previous pointer
         for(;;){
             myPrev = previous;
@@ -103,11 +105,12 @@ void high_reader(void *p1, void *p2, void *p3){
         }
         hiReaderPoi=myPrev;
         temp=buffer[hiReaderPoi].Val;
-        //printk("Value read by high reader%d %d\n",*(int*)p1,temp);
-        while(CAS(&buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt++)!=buffer[hiReaderPoi].InUseCnt); //Value not in use by this thread anymore
-        k_msleep(*(int*)p2);
         printk("Value read by high reader%d %d\n",*(int*)p1,temp);
+        while(CAS(&buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt++)!=buffer[hiReaderPoi].InUseCnt); //Value not in use by this thread anymore
+        for( volatile int i=0; i<*(int*)p2; i++);
+        //printk("Value read by high reader%d %d\n",*(int*)p1,temp);
         while(CAS(&buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt,buffer[hiReaderPoi].InUseCnt--)!=buffer[hiReaderPoi].InUseCnt); //Value not in use by this thread anymore
+        k_msleep(*(int*)p3);
     }
 }
 
@@ -147,22 +150,29 @@ void writer(){
         }
         buffer[current].Val = 100 + sys_rand32_get() % 50;
         printk("New value written %d\n",buffer[current].Val);
-        for(int i=0; i<SiBuf;i++){
-            printk("Element No. %d: %d;   ",i,buffer[i].Val);
+        for(int i=0; i<SiBuf+2;i++){
+            if (i==0)
+                printk("Previous: %d;   ",buffer[previous].Val);
+            else if(i==1)
+                printk("Current: %d;   ",buffer[current].Val);
+            else
+                printk("Element No. %d: %d;   ",i-2,buffer[i-2].Val);
         }
         printk("\n");
+        for( volatile int i=0; i<5000000; i++);
         k_msleep(2000);
     }
 }
 int LoRe[3] = {1,2,3};
-int LoRePe[3] = {1200,3000,10000};
-int LoReUD[3] = {0,1,0};
+int LoRePe[3] = {1200,20000,10000};
+int LoReUD[3] = {0,1,0}; //Wheter to LP tasks needs Unit dalay or no
 int HiRe[3] = {1,2,3};
-int HiRePe[3] = {500,8000,2000};
+int HiReExe[3] = {1000000,5000000,8000000};//Execution time for HP tasks
+int HiRePe[3] = {500,2000,8000};
 K_THREAD_DEFINE(LoRNUD1,LOW_READER_STACK, low_reader, &LoRe[0], &LoRePe[0], &LoReUD[0], LOW_READER_PRIORITY, 0, 0);
-K_THREAD_DEFINE(HiR1,HIGH_READER_STACK, high_reader, &HiRe[0], &HiRePe[0], NULL, HIGH_READER_PRIORITY, 0, 0);
+K_THREAD_DEFINE(HiR1,HIGH_READER_STACK, high_reader, &HiRe[0], &HiReExe[0], &HiRePe[0], HIGH_READER_PRIORITY, 0, 0);
 K_THREAD_DEFINE(LoRNUD2,LOW_READER_STACK, low_reader, &LoRe[1], &LoRePe[1], &LoReUD[1], LOW_READER_PRIORITY, 0, 0);
-K_THREAD_DEFINE(HiR2,HIGH_READER_STACK, high_reader, &HiRe[1], &HiRePe[1], NULL, HIGH_READER_PRIORITY, 0, 0);
+K_THREAD_DEFINE(HiR2,HIGH_READER_STACK, high_reader, &HiRe[1], &HiReExe[1], &HiRePe[1], HIGH_READER_PRIORITY, 0, 0);
 K_THREAD_DEFINE(LoRNUD3,LOW_READER_STACK, low_reader, &LoRe[2], &LoRePe[2], &LoReUD[2], LOW_READER_PRIORITY, 0, 0);
-K_THREAD_DEFINE(HiR3,HIGH_READER_STACK, high_reader, &HiRe[2], &HiRePe[2], NULL, HIGH_READER_PRIORITY, 0, 0);
+K_THREAD_DEFINE(HiR3,HIGH_READER_STACK, high_reader, &HiRe[2], &HiReExe[2], &HiRePe[2], HIGH_READER_PRIORITY, 0, 0);
 K_THREAD_DEFINE(Wri, Writer_STACK, writer, NULL, NULL, NULL, Writer_PRIORITY, 0, 0);
